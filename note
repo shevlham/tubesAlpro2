@@ -1,0 +1,63 @@
+Aplikasi AI Asisten Belajar untuk Pelajar dan Mahasiswa
+
+
+Deskripsi: Aplikasi ini berfungsi sebagai pendamping belajar berbasis AI yang dapat
+merangkum catatan, membuat soal latihan, serta mengatur jadwal belajar berdasarkan kebutuhan pengguna.
+Spesifikasi:
+
+
+a. Pengguna dapat menambahkan, mengubah, dan menghapus catatan 
+belajar serta topik yang dipelajari.
+
+b. Sistem secara otomatis membuat soal latihan 
+berdasarkan materi yang dimasukkan oleh pengguna.
+
+c. Pengguna dapat mencari materi berdasarkan kata 
+kunci menggunakan Sequential dan Binary Search.
+
+d. Pengguna dapat mengurutkan daftar catatan berdasarkan tanggal 
+atau tingkat kesulitan menggunakan Selection dan Insertion Sort.
+
+e. Sistem menampilkan jadwal belajar yang disesuaikan dengan
+ waktu luang pengguna.
+
+// rangkuman menu 
+
+menu utama
+1. catatan
+2. soal
+3. jadwal pembelajaran
+
+
+menu catatan
+1. menambahkan catatan
+2. menghapus catatan
+3. mengubah catatan
+4. pencarian catatan // sequential search
+5. urutkan catatan 
+	a. pengurutan catatan dari tanggal // selection sort
+	b. pengurutan catatan dari tingkat  // insertion sort
+
+menu soal
+1. buat soal otomatis berdasarkan catatan
+2. buat soal otomatis berdasarkan topik
+3. Pencarian soal // binary search
+
+menu jadwal pembelajaran
+1. menambahkan jadwal
+2. menghapus jadwal
+3. mengubah jadwal
+4. menampilkan jadwal
+
+fitur khusus
+
+bank soal (sistem otomatis buat soal)
+1. 5 topik
+2. bank soal 5 soal setiap topik
+3. soal
+4. jawaban
+
+
+
+
+
