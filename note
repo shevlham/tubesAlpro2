@@ -48,6 +48,7 @@ menu jadwal pembelajaran
 2. menghapus jadwal
 3. mengubah jadwal
 4. menampilkan jadwal
+5. mengurutkan jadwal
 
 fitur khusus
 
@@ -57,6 +58,12 @@ bank soal (sistem otomatis buat soal)
 3. soal
 4. jawaban
 
+
+
+
+data sampel
+
+1 1 101 1 1 12 2022 siroo wnjajkdwajkdwajdwajnjnwda 102 2 2 12 2022 nanaa awakawknkwanknawnkwank 103 3 3 12 2022 paropng wkkkdwjkwdjkdwjkdwjkdjwk 100 4 12 12 2022 dago jwqjwqkqwkjqwjk 20 5 29 12 2025 ntkadang wkjcknkscnkscnkcs 0 0 
 
 
 
