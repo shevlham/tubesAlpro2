@@ -79,6 +79,7 @@ func menuUtama() {
 	case 3:
 		menuJadwal()
 	case 0:
+		break
 	}
 }
 
