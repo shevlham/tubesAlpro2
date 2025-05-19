@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // konstanta array
 
@@ -20,27 +22,63 @@ type tCatatan struct {
 	tanggal           tTanggal
 }
 
-type tSoal struct {
-	IDs                                 int
-	topik, pertanyaan, jawaban, tingkat string
-}
-
 type tJadwal struct {
 	IDj     int
 	topik   string
 	tanggal tTanggal
 }
+type tSoal struct {
+	IDs                                 int
+	topik, pertanyaan, jawaban, tingkat string
+	pilihan                             [4]string
+}
+
+// BANK SOAL
+var Soal = [NMAX]tSoal{
+	// Matematika
+	{1, "Matematika", "Berapakah 12 + 8?", "20", "Mudah", [4]string{"18", "20", "22", "24"}},
+	{2, "Matematika", "Berapakah 15 x 6?", "90", "Sedang", [4]string{"80", "85", "90", "95"}},
+	{3, "Matematika", "Hasil dari 8^2 - 4^2 adalah?", "48", "Sedang", [4]string{"32", "48", "64", "52"}},
+	{4, "Matematika", "Jika x + 5 = 12, maka x adalah?", "7", "Mudah", [4]string{"5", "6", "7", "8"}},
+	{5, "Matematika", "Integral dari 2x dx adalah?", "x^2 + C", "Sulit", [4]string{"2x + C", "x^2 + C", "x^2/2 + C", "2x^2 + C"}},
+
+	// Bahasa Indonesia
+	{6, "Bahasa Indonesia", "Apa lawan kata dari 'besar'?", "Kecil", "Mudah", [4]string{"Kecil", "Luas", "Panjang", "Banyak"}},
+	{7, "Bahasa Indonesia", "Makna konotatif dari 'ular' adalah?", "Pengkhianat", "Sedang", [4]string{"Hewan", "Licik", "Pengkhianat", "Panjang"}},
+	{8, "Bahasa Indonesia", "Kalimat 'Dia pergi ke pasar.' adalah?", "Kalimat berita", "Mudah", [4]string{"Kalimat tanya", "Kalimat perintah", "Kalimat berita", "Kalimat aktif"}},
+	{9, "Bahasa Indonesia", "Apa fungsi majas metafora?", "Memberi kesan imajinatif", "Sedang", [4]string{"Menjelaskan definisi", "Memberi kesan imajinatif", "Menarik perhatian", "Menghindari pengulangan"}},
+	{10, "Bahasa Indonesia", "Struktur teks eksposisi terdiri dari?", "Tesis, argumentasi, penegasan ulang", "Sulit", [4]string{"Orientasi, komplikasi, resolusi", "Tesis, argumentasi, penegasan ulang", "Pembukaan, isi, penutup", "Gagasan utama, isi, simpulan"}},
+
+	// Bahasa Inggris
+	{11, "Bahasa Inggris", "What is the opposite of 'hot'?", "Cold", "Mudah", [4]string{"Cold", "Warm", "Cool", "Boiling"}},
+	{12, "Bahasa Inggris", "Past tense of 'run'?", "Ran", "Sedang", [4]string{"Run", "Running", "Ran", "Runned"}},
+	{13, "Bahasa Inggris", "Translate: 'Mereka sedang belajar.'", "They are studying", "Mudah", [4]string{"They studying", "They are study", "They are studying", "They studies"}},
+	{14, "Bahasa Inggris", "Synonym of 'quick'?", "Fast", "Mudah", [4]string{"Slow", "Fast", "Late", "Quiet"}},
+	{15, "Bahasa Inggris", "Structure of Present Perfect Continuous?", "Has/have been + V-ing", "Sulit", [4]string{"Was/were + V-ing", "Has/have + V-ed", "Has/have been + V-ing", "Had been + V-ing"}},
+
+	// IPA
+	{16, "IPA", "Perubahan dari cair ke gas disebut?", "Menguap", "Mudah", [4]string{"Membeku", "Mengembun", "Menguap", "Mencair"}},
+	{17, "IPA", "Fungsi klorofil pada tumbuhan?", "Fotosintesis", "Mudah", [4]string{"Transpirasi", "Respirasi", "Fotosintesis", "Reproduksi"}},
+	{18, "IPA", "Contoh gaya gesek adalah?", "Gaya saat mengerem sepeda", "Sedang", [4]string{"Tarikan tali", "Dorongan angin", "Gaya saat mengerem sepeda", "Gaya magnet"}},
+	{19, "IPA", "Hukum Newton ke-2 berbunyi?", "F = m x a", "Sedang", [4]string{"F = m + a", "F = m / a", "F = m x a", "F = m - a"}},
+	{20, "IPA", "Fungsi mitokondria dalam sel?", "Tempat respirasi sel", "Sulit", [4]string{"Mengatur air", "Pengatur suhu", "Tempat respirasi sel", "Sintesis protein"}},
+
+	// IPS
+	{21, "IPS", "Ibu kota Indonesia adalah?", "Jakarta", "Mudah", [4]string{"Bandung", "Jakarta", "Surabaya", "Medan"}},
+	{22, "IPS", "Singkatan ASEAN adalah?", "Association of Southeast Asian Nations", "Sedang", [4]string{"Asia Economic Association", "Association of Southeast Asian Nations", "Asia-Europe Society", "Association of South Africa Nations"}},
+	{23, "IPS", "Sistem pemerintahan Indonesia adalah?", "Presidensial", "Sedang", [4]string{"Parlementer", "Federasi", "Presidensial", "Monarki"}},
+	{24, "IPS", "Pengaruh letak geografis Indonesia?", "Iklim tropis", "Sulit", [4]string{"Iklim dingin", "Iklim subtropis", "Iklim tropis", "Iklim kutub"}},
+	{25, "IPS", "Benua tempat Indonesia berada?", "Asia", "Mudah", [4]string{"Eropa", "Afrika", "Asia", "Australia"}},
+}
 
 // variabel global array
 
 var cat [NMAX]tCatatan
-var sol [NMAX]tSoal
 var jad [NMAX]tJadwal
 
 // iterasi array
 
 var icat int = 0
-var isol int = 0
 var ijad int = 0
 
 // fungsi utama
@@ -79,6 +117,9 @@ func menuUtama() {
 	case 3:
 		menuJadwal()
 	case 0:
+		fmt.Println("Terima Kasih Telah Mengunakan Aplikasi Asistensi Pembelajaran :)")
+	default:
+		menuUtama()
 	}
 }
 
@@ -115,6 +156,8 @@ func menuCatatan() {
 		menuUrutkanCatatan()
 	case 0:
 		menuUtama()
+	default:
+		menuCatatan()
 	}
 }
 func menuSoal() {
@@ -133,11 +176,13 @@ func menuSoal() {
 
 	switch input {
 	case 1:
-		cariSoalMateri()
+		menuCariSoalMateri()
 	case 2:
-		cariSoalCatatan()
+		MenuCariSoalCatatan()
 	case 0:
 		menuUtama()
+	default:
+		menuSoal()
 	}
 }
 func menuJadwal() {}
@@ -235,8 +280,14 @@ func menuCariCatatan() {
 		menuCatatan()
 	} else if x != -1 {
 		fmt.Println("Catatan ditemukan :")
-		fmt.Printf("%7s  %5s / %5s / %5s  %8s %15s\n", "ID Cat", "tgl", "bln", "thn", "topik", "judul")
-		fmt.Printf("%7d  %5d / %5d / %d  %8v %15v\n", cat[x].IDc, cat[x].tanggal.hari, cat[x].tanggal.bulan, cat[x].tanggal.tahun, cat[x].topik, cat[x].judul)
+		fmt.Println("_______________________________________________________________________________")
+		fmt.Println()
+		fmt.Printf("%10s  %5s / %5s / %5s  %18s %22s\n", "ID Cat", "tgl", "bln", "thn", "topik", "judul")
+		fmt.Println("_______________________________________________________________________________")
+		fmt.Println()
+		fmt.Printf("%10d  %5d / %5d / %5d  %18s %22s\n", cat[x].IDc, cat[x].tanggal.hari, cat[x].tanggal.bulan, cat[x].tanggal.tahun, cat[x].topik, cat[x].judul)
+		fmt.Println("_______________________________________________________________________________")
+		fmt.Println()
 		menuCariCatatan()
 	} else {
 		fmt.Println("Data Tidak ditemukan")
@@ -275,6 +326,65 @@ func menuUrutkanCatatan() {
 
 }
 
+func menuCariSoalMateri() {
+	var input int
+	fmt.Println("===============================================")
+	fmt.Println("=  Menu Soal : Cari Soal Berdasarkan Materi  =")
+	fmt.Println("==============================================")
+	fmt.Println("Pilihan Materi")
+	fmt.Println("1. Matematika")
+	fmt.Println("2. Bahasa Indonesia")
+	fmt.Println("3. Bahasa Inggris")
+	fmt.Println("4. IPA")
+	fmt.Println("5. IPS")
+	fmt.Println("0. kembali")
+	fmt.Print("Pilih Materi :")
+	fmt.Scan(&input)
+	switch input {
+	case 1:
+		genSoal("Matematika")
+		menuCariSoalMateri()
+	case 2:
+		genSoal("Bahasa Indonesia")
+		menuCariSoalMateri()
+	case 3:
+		genSoal("Bahasa Inggris")
+		menuCariSoalMateri()
+	case 4:
+		genSoal("IPA")
+		menuCariSoalMateri()
+	case 5:
+		genSoal("IPS")
+		menuCariSoalMateri()
+	case 0:
+		menuSoal()
+	default:
+		menuCariSoalMateri()
+	}
+
+}
+
+func MenuCariSoalCatatan() {
+	var input int
+
+	fmt.Println("=============================================")
+	fmt.Println("= Menu Soal : Cari Soal Berdasarkan Catatan =")
+	fmt.Println("=   Catatan : ketik '0' jika ingin kembali  =")
+	fmt.Println("=============================================")
+	fmt.Print("Pilih ID Catatan : ")
+	fmt.Scan(&input)
+
+	if input == 0 {
+		menuSoal()
+	} else if seqsearchcat(input) == -1 {
+		fmt.Println("ID tidak ditemukan")
+		menuCariSoalMateri()
+	} else {
+		genSoal(cat[seqsearchcat(input)].topik)
+		menuCariCatatan()
+	}
+}
+
 // program lainnya --------------------------------------------
 
 func tambahCatatan(input int, j int) {
@@ -304,6 +414,10 @@ func tambahCatatan(input int, j int) {
 		cat[j].topik = "IPA"
 	case 5:
 		cat[j].topik = "IPS"
+	case 0:
+		menuCatatan()
+	default:
+		tambahCatatan(input, j)
 	}
 
 	// input tanggal
@@ -339,6 +453,7 @@ func tambahCatatan(input int, j int) {
 
 }
 
+// menampilkan seluruh catatan
 func tampilCatatan() {
 	var i int
 	fmt.Println("____________________________________________________________________________")
@@ -368,39 +483,21 @@ func seqsearchcat(x int) int {
 }
 
 func selectSortCat() {
-
-	// urut tahun
 	var i, j, min int
-	for i = 0; i < icat; i++ {
-		min = i
-		for j = i + 1; j < icat; j++ {
-			if cat[min].tanggal.tahun > cat[j].tanggal.tahun {
-				min = j
-			}
-		}
-		cat[i].tanggal.tahun, cat[min].tanggal.tahun = cat[min].tanggal.tahun, cat[i].tanggal.tahun
-	}
 
-	//urut bulan
-	for i = 0; i < icat; i++ {
+	// selection sort berdasarkan tahun, bulan, dan tanggal
+	for i = 0; i < icat-1; i++ {
 		min = i
 		for j = i + 1; j < icat; j++ {
-			if cat[min].tanggal.bulan > cat[j].tanggal.tahun && cat[min].tanggal.tahun == cat[j].tanggal.tahun {
+			// bandingkan tahun dulu
+			if cat[j].tanggal.tahun < cat[min].tanggal.tahun ||
+				(cat[j].tanggal.tahun == cat[min].tanggal.tahun && cat[j].tanggal.bulan < cat[min].tanggal.bulan) ||
+				(cat[j].tanggal.tahun == cat[min].tanggal.tahun && cat[j].tanggal.bulan == cat[min].tanggal.bulan && cat[j].tanggal.hari < cat[min].tanggal.hari) {
 				min = j
 			}
 		}
-		cat[i].tanggal.tahun, cat[min].tanggal.tahun = cat[min].tanggal.tahun, cat[i].tanggal.tahun
-	}
-
-	// urut tanggal
-	for i = 0; i < icat; i++ {
-		min = i
-		for j = i + 1; j < icat; j++ {
-			if cat[min].tanggal.bulan > cat[j].tanggal.tahun && cat[min].tanggal.tahun == cat[j].tanggal.tahun && cat[min].tanggal.bulan == cat[j].tanggal.bulan {
-				min = j
-			}
-		}
-		cat[i].tanggal.tahun, cat[min].tanggal.tahun = cat[min].tanggal.tahun, cat[i].tanggal.tahun
+		// swap seluruh elemen
+		cat[i], cat[min] = cat[min], cat[i]
 	}
 }
 func insertSortCat() {
@@ -420,5 +517,78 @@ func insertSortCat() {
 	}
 }
 
-func cariSoalMateri()  {}
-func cariSoalCatatan() {}
+func tingkatKesulitan() string {
+	var input int
+	fmt.Println("========================")
+	fmt.Println(" 1. Mudah")
+	fmt.Println(" 2. Sedang")
+	fmt.Println(" 3. Sulit")
+	fmt.Println("========================")
+	fmt.Print("Pilih Tingkat kesulitan : ")
+	fmt.Scan(&input)
+	if input == 1 {
+		return "Mudah"
+	} else if input == 2 {
+		return "Sedang"
+	} else if input == 3 {
+		return "Sulit"
+	} else {
+		return tingkatKesulitan()
+	}
+}
+
+// Soal
+
+func genSoal(topik string) {
+	var tingkat string
+	var i, n int
+	tingkat = tingkatKesulitan()
+	switch topik {
+	case "Matematika":
+		i = 0
+		n = 4
+	case "Bahasa Indonesia":
+		i = 5
+		n = 9
+	case "Bahasa Inggris":
+		i = 10
+		n = 14
+	case "IPA":
+		i = 15
+		n = 19
+	case "IPS":
+		i = 20
+		n = 24
+	}
+
+	for i <= n && tingkat != Soal[i].tingkat {
+		i++
+	}
+
+	fmt.Println("============================")
+	fmt.Println("=   Pembuat Soal Otomatis  =")
+	fmt.Println("============================")
+	tampilanSoal(i)
+	cekJawaban(i)
+	menuSoal()
+
+}
+
+func tampilanSoal(i int) {
+	fmt.Println(Soal[i].pertanyaan)
+	fmt.Println("Pilihan 1 : ", Soal[i].pilihan[0])
+	fmt.Println("Pilihan 2 : ", Soal[i].pilihan[1])
+	fmt.Println("Pilihan 3 : ", Soal[i].pilihan[2])
+	fmt.Println("Pilihan 4 : ", Soal[i].pilihan[3])
+}
+func cekJawaban(i int) {
+	var pilihan int
+	fmt.Print("Pilihan Jawaban Anda : ")
+	fmt.Scan(&pilihan)
+	if Soal[i].pilihan[pilihan-1] == Soal[i].jawaban {
+		fmt.Println("Jawaban Anda Benar")
+	} else {
+		fmt.Println("Jawaban Anda Salah")
+		cekJawaban(i)
+	}
+}
