@@ -185,7 +185,47 @@ func menuSoal() {
 		menuSoal()
 	}
 }
-func menuJadwal() {}
+func menuJadwal() {
+	var inputmenu int
+	var tj string
+
+	fmt.Println(" _________________________________")
+	fmt.Println("|                                 |")
+	fmt.Println("| Aplikasi Asistensi Pembelajaran |")
+	fmt.Println("|_________________________________|")
+	fmt.Println()
+	fmt.Println("===================================")
+	fmt.Println("=   Menu Jadwal Pembelajaran      =")
+	fmt.Println("===================================")
+	for {
+		fmt.Println("Pilihan Menu")
+		fmt.Println("1. Menambahkan Jadwal")
+		fmt.Println("2. Menghapus Jadwal")
+		fmt.Println("3. Mengubah Jadwal")
+		fmt.Println("4. Menampilkan Jadwal")
+		fmt.Println("5. Mengurutkan Jadwal")
+		fmt.Println("0. Kembali")
+		fmt.Print("Pilih Menu : ")
+		fmt.Scan(&inputmenu)
+
+		if inputmenu == 1 {
+			fmt.Print("Masukkan Jadwal yang ingin di tambahkan : ")
+			fmt.Scan(&tj)
+			fmt.Println("Jadwal Berhasil di tambahkan : ", tj)
+		} else if inputmenu == 2 {
+			fmt.Println("Masukkan Jadwal yang ingin di hapus : ")
+		} else if inputmenu == 3 {
+			fmt.Println("Masukkan Jadwal yang ingin di ubah : ")
+		} else if inputmenu == 4 {
+			fmt.Println("jadwal : ")
+		} else if inputmenu == 5 {
+			fmt.Println("Jadwal yang ingin di Urutkan : ")
+		} else {
+			menuUtama()
+		}
+
+	}
+}
 
 // program submenu
 
