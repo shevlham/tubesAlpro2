@@ -575,11 +575,11 @@ func genSoal(topik string) {
 }
 
 func tampilanSoal(i int) {
+	var j int
 	fmt.Println(Soal[i].pertanyaan)
-	fmt.Println("Pilihan 1 : ", Soal[i].pilihan[0])
-	fmt.Println("Pilihan 2 : ", Soal[i].pilihan[1])
-	fmt.Println("Pilihan 3 : ", Soal[i].pilihan[2])
-	fmt.Println("Pilihan 4 : ", Soal[i].pilihan[3])
+	for j = 0; j < 4; j++ {
+		fmt.Printf("Pilihan %v : %v\n", j+1, Soal[i].pilihan[j])
+	}
 }
 func cekJawaban(i int) {
 	var pilihan int
