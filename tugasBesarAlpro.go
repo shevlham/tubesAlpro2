@@ -189,13 +189,8 @@ func menuJadwal() {
 	var inputmenu int
 	var tj string
 
-	fmt.Println(" _________________________________")
-	fmt.Println("|                                 |")
-	fmt.Println("| Aplikasi Asistensi Pembelajaran |")
-	fmt.Println("|_________________________________|")
-	fmt.Println()
 	fmt.Println("===================================")
-	fmt.Println("=   Menu Jadwal Pembelajaran      =")
+	fmt.Println("=     Menu Jadwal Pembelajaran     =")
 	fmt.Println("===================================")
 	for {
 		fmt.Println("Pilihan Menu")
