@@ -187,13 +187,17 @@ func menuSoal() {
 }
 func menuJadwal() {
 	var inputmenu int
-	var tj string
 
+	fmt.Println(" _________________________________")
+	fmt.Println("|                                 |")
+	fmt.Println("| Aplikasi Asistensi Pembelajaran |")
+	fmt.Println("|_________________________________|")
+	fmt.Println()
 	fmt.Println("===================================")
-	fmt.Println("=     Menu Jadwal Pembelajaran     =")
+	fmt.Println("=   Menu Jadwal Pembelajaran      =")
 	fmt.Println("===================================")
 	for {
-		fmt.Println("Pilihan Menu")
+		fmt.Println("\nPilihan Menu")
 		fmt.Println("1. Menambahkan Jadwal")
 		fmt.Println("2. Menghapus Jadwal")
 		fmt.Println("3. Mengubah Jadwal")
@@ -204,21 +208,311 @@ func menuJadwal() {
 		fmt.Scan(&inputmenu)
 
 		if inputmenu == 1 {
-			fmt.Print("Masukkan Jadwal yang ingin di tambahkan : ")
-			fmt.Scan(&tj)
-			fmt.Println("Jadwal Berhasil di tambahkan : ", tj)
+			tambahJadwal()
 		} else if inputmenu == 2 {
-			fmt.Println("Masukkan Jadwal yang ingin di hapus : ")
+			hapusJadwal()
 		} else if inputmenu == 3 {
-			fmt.Println("Masukkan Jadwal yang ingin di ubah : ")
+			editJadwal()
 		} else if inputmenu == 4 {
-			fmt.Println("jadwal : ")
+			tampilJadwal()
 		} else if inputmenu == 5 {
-			fmt.Println("Jadwal yang ingin di Urutkan : ")
+			urutJadwal()
 		} else {
 			menuUtama()
 		}
 
+	}
+}
+
+// program submenu
+func tambahJadwal() {
+	var hari, bulan int
+	var konfirmasi, pelajaran, namaBulan string
+
+	fmt.Println("===================================")
+	fmt.Println("=   Menu Jadwal Pembelajaran      =")
+	fmt.Println("===================================")
+	for {
+		fmt.Print("\nMasukkan Hari : ")
+		fmt.Scan(&hari)
+		if hari >= 1 && hari <= 31 {
+			break
+		} else {
+			fmt.Println("Tanggal salah")
+		}
+	}
+
+	for {
+		fmt.Print("\nMasukkan Bulan : ")
+		fmt.Scan(&bulan)
+		if bulan >= 1 && bulan <= 12 {
+			break
+		} else {
+			fmt.Println("Bulan salah")
+		}
+	}
+	switch bulan {
+	case 1:
+		namaBulan = "Januari"
+	case 2:
+		namaBulan = "Februari"
+	case 3:
+		namaBulan = "Maret"
+	case 4:
+		namaBulan = "April"
+	case 5:
+		namaBulan = "Mei"
+	case 6:
+		namaBulan = "Juni"
+	case 7:
+		namaBulan = "Juli"
+	case 8:
+		namaBulan = "Agustus"
+	case 9:
+		namaBulan = "September"
+	case 10:
+		namaBulan = "Oktober"
+	case 11:
+		namaBulan = "November"
+	case 12:
+		namaBulan = "Desember"
+	default:
+		namaBulan = "Tidak Valid"
+	}
+
+	fmt.Println("\nApakah Tanggal yang anda masukkan sudah benar (Y/N)?", "Tanggal", hari, ", Bulan", namaBulan)
+	fmt.Scan(&konfirmasi)
+	if konfirmasi == "Y" || konfirmasi == "y" {
+		fmt.Print("\nPelajaran yang di tambahkan : ")
+		fmt.Scan(&pelajaran)
+
+		if ijad < NMAX {
+			jad[ijad] = tJadwal{
+				IDj:     ijad + 1,
+				topik:   pelajaran,
+				tanggal: tTanggal{hari: hari, bulan: bulan},
+			}
+			ijad++
+			fmt.Println("\nJadwal Belajar", pelajaran, "Berhasil di tambahkan untuk Tanggal", hari, ",", "Bulan", namaBulan)
+		}
+	} else {
+		fmt.Println("\nKembali...")
+		return
+	}
+
+}
+
+func hapusJadwal() {
+	var input, i, x int
+
+	fmt.Println("==========================================")
+	fmt.Println("=      Menu Jadwal: Hapus Jadwal         =")
+	fmt.Println("= Catatan : ketik '0' jika ingin kembali =")
+	fmt.Println("==========================================")
+	tampilJadwal()
+	fmt.Println("==========================================")
+	fmt.Print("Pilih ID Catatan yang ingin dihapus : ")
+	fmt.Scan(&input)
+
+	x = cariJadwal(input)
+	if input == 0 {
+		return
+	} else if x == -1 {
+		fmt.Println("ID Tidak Ditemukan")
+		return
+	}
+
+	for i = x; i < ijad-1; i++ {
+		jad[i] = jad[i+1]
+		jad[i].IDj = i + 1
+	}
+	ijad--
+	fmt.Println("Jadwal telah dihapus")
+	tampilJadwal()
+}
+
+func editJadwal() {
+	var input, x int
+	var hari, bulan int
+	var konfirmasi, pelajaran, namaBulan string
+
+	fmt.Println("==========================================")
+	fmt.Println("=     Menu Jadwal: mengubah Jadwal       =")
+	fmt.Println("= Catatan : ketik '0' jika ingin kembali =")
+	fmt.Println("==========================================")
+	tampilJadwal()
+	fmt.Println("==========================================")
+	fmt.Print("Pilih ID Jadwal yang ingin diubah : ")
+	fmt.Scan(&input)
+
+	x = cariJadwal(input)
+	if input == 0 {
+		menuJadwal()
+	} else if x == -1 {
+		fmt.Println("Data Tidak ditemukan")
+		return
+	}
+
+	fmt.Println("Data Yang Akan Diubah: ")
+	fmt.Printf("ID: %d | Tanggal: %d/%d | Pelajaran: %s\n",
+		jad[x].IDj, jad[x].tanggal.hari, jad[x].tanggal.bulan, jad[x].topik)
+
+	for {
+		fmt.Print("\nMasukkan Hari Baru (1-31, 0 untuk tidak mengubah) : ")
+		fmt.Scan(&hari)
+		if hari == 0 {
+			hari = jad[x].tanggal.hari
+		} else if hari >= 1 && hari <= 31 {
+			break
+		} else {
+			fmt.Println("Tanggal salah")
+		}
+	}
+
+	for {
+		fmt.Print("\nMasukkan Bulan Baru (1-12, 0 untuk tidak mengubah) : ")
+		fmt.Scan(&bulan)
+		if bulan == 0 {
+			bulan = jad[x].tanggal.bulan
+		} else if bulan >= 1 && bulan <= 12 {
+			break
+		} else {
+			fmt.Println("Bulan salah")
+		}
+	}
+
+	switch bulan {
+	case 1:
+		namaBulan = "Januari"
+	case 2:
+		namaBulan = "Februari"
+	case 3:
+		namaBulan = "Maret"
+	case 4:
+		namaBulan = "April"
+	case 5:
+		namaBulan = "Mei"
+	case 6:
+		namaBulan = "Juni"
+	case 7:
+		namaBulan = "Juli"
+	case 8:
+		namaBulan = "Agustus"
+	case 9:
+		namaBulan = "September"
+	case 10:
+		namaBulan = "Oktober"
+	case 11:
+		namaBulan = "November"
+	case 12:
+		namaBulan = "Desember"
+	default:
+		namaBulan = "Tidak Valid"
+	}
+
+	fmt.Println("Apakah tanggal yang dimasukkan sudah benar? (Y/N)", "Tanggal", hari, ", Bulan", namaBulan)
+	fmt.Scan(&konfirmasi)
+	if konfirmasi == "Y" || konfirmasi == "y" {
+		fmt.Print("\nMasukkan Pelajaran baru ('0' untuk tidak mengubah): ")
+		fmt.Scan(&pelajaran)
+		if pelajaran != "0" {
+			jad[x].topik = pelajaran
+		}
+
+		jad[x].tanggal.hari = hari
+		jad[x].tanggal.bulan = bulan
+
+		fmt.Println("\nJadwal berhasil diubah!")
+		fmt.Printf("ID: %d | Tanggal: %d/%d | Pelajaran: %s\n",
+			jad[x].IDj, jad[x].tanggal.hari, jad[x].tanggal.bulan, jad[x].topik)
+	} else {
+		fmt.Println("Perubahan dibatalkan!")
+		return
+	}
+}
+
+func cariJadwal(x int) int {
+	var found, i int
+	found = -1
+	for i = 0; i < ijad; i++ {
+		if jad[i].IDj == x {
+			found = i
+		}
+	}
+	return found
+}
+
+func tampilJadwal() {
+	var i int
+	fmt.Println("____________________________________________________________________________")
+	fmt.Println()
+	fmt.Println("                               Daftar Jadwal								")
+	fmt.Println("____________________________________________________________________________")
+	fmt.Println()
+	fmt.Printf("%10s | %7s | %5s | %10s\n", "ID Jadwal", "Tanggal", "Bulan", "Pelajaran")
+	for i = 0; i < ijad; i++ {
+		fmt.Printf("%10d | %7d | %5d | %10s\n", jad[i].IDj, jad[i].tanggal.hari, jad[i].tanggal.bulan, jad[i].topik)
+	}
+	fmt.Println("____________________________________________________________________________")
+	fmt.Println()
+
+}
+
+func urutJadwal() {
+	var input int
+
+	fmt.Println("===================================")
+	fmt.Println("=   Menu Jadwal: Urutkan Jadwal   =")
+	fmt.Println("===================================")
+	fmt.Println("Pilihan Urutan:")
+	fmt.Println("1. Urutkan berdasarkan Tanggal")
+	fmt.Println("2. Urutkan berdasarkan Pelajaran")
+	fmt.Println("0. Kembali")
+	fmt.Print("Pilih Menu: ")
+	fmt.Scan(&input)
+
+	switch input {
+	case 1:
+		urutJadwalByTanggal()
+		fmt.Println("Jadwal telah diurutkan berdasarkan Tanggal")
+		tampilJadwal()
+	case 2:
+		urutJadwalByPelajaran()
+		fmt.Println("Jadwal telah diurutkan berdasarkan Pelajaran")
+		tampilJadwal()
+	case 0:
+		return
+	default:
+		fmt.Println("Pilihan tidak valid")
+	}
+}
+
+func urutJadwalByTanggal() {
+	for i := 0; i < ijad-1; i++ {
+		minIdx := i
+		for j := i + 1; j < ijad; j++ {
+			if jad[j].tanggal.bulan < jad[minIdx].tanggal.bulan {
+				minIdx = j
+			} else if jad[j].tanggal.bulan == jad[minIdx].tanggal.bulan {
+				if jad[j].tanggal.hari < jad[minIdx].tanggal.hari {
+					minIdx = j
+				}
+			}
+		}
+		jad[i], jad[minIdx] = jad[minIdx], jad[i]
+	}
+}
+
+func urutJadwalByPelajaran() {
+	for i := 1; i < ijad; i++ {
+		key := jad[i]
+		j := i - 1
+
+		for j >= 0 && jad[j].topik > key.topik {
+			jad[j+1] = jad[j]
+			j--
+		}
+		jad[j+1] = key
 	}
 }
 
