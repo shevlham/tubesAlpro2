@@ -528,11 +528,16 @@ func menuTambahCatatan() {
 	fmt.Println("==========================================")
 	fmt.Print("ID : ")
 	fmt.Scan(&input)
-	if input != 0 {
-		tambahCatatan(input, icat)
-		menuTambahCatatan()
+
+	if icat < NMAX {
+		if input != 0 {
+			tambahCatatan(input, icat)
+			menuTambahCatatan()
+		} else {
+			menuCatatan()
+		}
 	} else {
-		menuCatatan()
+		fmt.Println("Daftar Catatan Penuh")
 	}
 }
 
