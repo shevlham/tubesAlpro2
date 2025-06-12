@@ -538,6 +538,7 @@ func menuTambahCatatan() {
 		}
 	} else {
 		fmt.Println("Daftar Catatan Penuh")
+		menuCatatan()
 	}
 }
 
